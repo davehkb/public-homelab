@@ -3,7 +3,7 @@ echo Backing up
 FOLDER=/mnt/gdrive/plexguide/backup
 DOCKERS=`ls /opt/appdata/`
 echo $FOLDER
-DATES=`date +%Y-%m-%d_%H.%M.%S`
+DATES=`date +%Y-%m-%d_%H.%M`
 echo $DATES
 rclone --config=/opt/appdata/uploader/rclone.conf mkdir gdrive:/plexguide/backup/archive/$DATES -v --stats 2s
 echo ARCHIVING OLD BACKUPS
