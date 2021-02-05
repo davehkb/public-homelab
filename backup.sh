@@ -12,9 +12,16 @@ rclone --config=/opt/appdata/uploader/rclone.conf -v --stats 5s copy gdrive:/ple
 
 for VAR in $DOCKERS
 do
+        echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        echo "sleep for 5 seconds"
+        echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         sleep 5s
         echo $VAR
         echo $VAR >/tmp/program_var && bash /opt/pgvault/pgcron
 
 done
+echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 echo Testing complete $date
+echo restarting all dockers
+docker restart $(docker ps -q)
+echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
