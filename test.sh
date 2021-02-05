@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $date > /root/test.log
+echo hi > /root/test.log
