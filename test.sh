@@ -1,2 +1,2 @@
 #!/bin/bash
-echo hi > /root/test.log
+echo hi
