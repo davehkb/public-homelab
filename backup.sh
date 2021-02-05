@@ -24,4 +24,5 @@ echo ━━━━━━━━━━━━━━━━━━━━━━━━━
 echo Testing complete $date
 echo restarting all dockers
 docker restart $(docker ps -q)
+echo finished at $DATE
 echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
