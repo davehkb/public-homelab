@@ -2,7 +2,7 @@
 echo $HOSTNAME
 echo Backing up
 FOLDER=/mnt/gdrive/plexguide/backup
-DOCKERS=sonarr radarr nzbget nzbhydra traktarr radarr4k sonarr4k
+DOCKERS="sonarr radarr nzbget nzbhydra traktarr radarr4k sonarr4k"
 echo $FOLDER
 DATES=`date +%Y-%m-%d_%H.%M`
 echo $DATES
