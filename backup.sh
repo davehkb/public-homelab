@@ -23,6 +23,6 @@ done
 echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 echo Testing complete $date
 echo restarting all dockers
-docker restart $(docker ps -q)
+#docker restart $(docker ps -q)
 echo finished at `date`
 echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
