@@ -2,7 +2,7 @@
 echo $HOSTNAME
 echo Backing up
 FOLDER=/mnt/gdrive/plexguide/backup
-DOCKERS="sonarr radarr nzbget nzbhydra traktarr radarr4k sonarr4k sabnzbd"
+DOCKERS="sonarr radarr nzbget nzbhydra traktarr radarr4k sonarr4k sabnzbd nabarr"
 echo $FOLDER
 DATES=`date +%Y-%m-%d_%H.%M`
 echo $DATES
@@ -24,6 +24,7 @@ echo ━━━━━━━━━━━━━━━━━━━━━━━━━
 echo Testing complete $date
 echo restarting all dockers
 #docker restart $(docker ps -q)
+sudo docker restart $(docker ps -aq --format '{{.Names}}' | sed '/^$/d' | grep -E 'arr')
 echo finished at `date`
 echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 echo pushing out to Healthcheck.io
