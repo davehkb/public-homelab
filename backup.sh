@@ -26,3 +26,5 @@ echo restarting all dockers
 #docker restart $(docker ps -q)
 echo finished at `date`
 echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+echo pushing out to Healthcheck.io
+curl -m 10 --retry 5 https://hc-ping.com/13dea367-46f0-4d24-b6c0-3cc60b476186
