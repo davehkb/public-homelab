@@ -1,4 +1,13 @@
 #!/bin/bash
+function jumpto
+{
+    label=$1
+    cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
+    eval "$cmd"
+    exit
+}
+
+
 echo $HOSTNAME
 echo Backing up
 FOLDER=/mnt/gdrive/plexguide/backup
@@ -25,6 +34,20 @@ echo Testing complete $date
 echo restarting all dockers
 #docker restart $(docker ps -q)
 sudo docker restart $(docker ps -aq --format '{{.Names}}' | sed '/^$/d' | grep -E 'arr')
+start:
+echo after start
+for VAR in $DOCKERS
+do
+        if [ "$( docker container inspect -f '{{.State.Running}}' $VAR )" == "true" ];
+        then
+        echo $VAR up
+        else
+        echo $VAR down
+        docker start $VAR
+        jumpto start
+        fi
+done
+
 echo finished at `date`
 echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 echo pushing out to Healthcheck.io
