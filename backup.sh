@@ -11,7 +11,7 @@ function jumpto
 echo $HOSTNAME
 echo Backing up
 FOLDER=/mnt/gdrive/plexguide/backup
-DOCKERS="sonarr radarr nzbget nzbhydra traktarr radarr4k sonarr4k sabnzbd nabarr"
+DOCKERS="sonarr radarr nzbget nzbhydra traktarr radarr4k sonarr4k sabnzbd nabarr organizr"
 echo $FOLDER
 DATES=`date +%Y-%m-%d_%H.%M`
 echo $DATES
