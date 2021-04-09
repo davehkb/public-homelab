@@ -25,6 +25,7 @@
     - name: Change to EST timezone
       shell: |
        timedatectl set-timezone America/Toronto
+       sed -i '1s/^/TZ=EST\n /' /var/spool/cron/crontabs/root
        service cron restart
     - name: Change VNstat to 10G
       shell: |
