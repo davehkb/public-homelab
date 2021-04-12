@@ -60,6 +60,7 @@
        sudo apt-get upgrade -yqq
        sudo apt-get autoclean -yqq
        sudo apt-get install wget -y
+       /etc/init.d/cron reload
     - name: get public IP
       ipify_facts:
       register: public_ip
