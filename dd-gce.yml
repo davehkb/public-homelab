@@ -43,9 +43,11 @@
     - name: Change VNstat to 10G
       shell: |
        sed -i 's/MaxBandwidth/#MaxBandwidth/g' /etc/vnstat.conf && echo "MaxBandwidth 0" >> /etc/vnstat.conf && service vnstat restart
-    - name: Change Crontab to EST
-      shell: |
-       sed -i '1s/^/TZ=EST\n /' /var/spool/cron/crontabs/root
+    - name: Change crontab to EST
+      ansible.builtin.lineinfile:
+        path: /var/spool/cron/crontabs/root
+        line: TZ=EST
+        create: yes
     - name: Crontab Backup
       ansible.builtin.cron:
        name: "Daily docker backup to gdrive"
