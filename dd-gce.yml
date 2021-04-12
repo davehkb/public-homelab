@@ -24,7 +24,7 @@
     - name: Add Alias Dockers
       ansible.builtin.lineinfile:
         path: /root/.bashrc
-        line: alias dockers='watch docker ps''
+        line: alias dockers='watch docker ps'
         create: yes
     - name: Add Alias Tracktarz
       ansible.builtin.lineinfile:
