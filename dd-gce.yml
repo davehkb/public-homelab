@@ -12,24 +12,40 @@
       hostname:
        name='{{hostname}}'
     - name: Add ssh key to proper location
-      shell: |
-       echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAhydYLT6JTiIdxQw5nJlkyTwgwIwWLeu7dpz4+Xnvv24tEFIDkthTFgVnSbXe1NzP9VsosSmQr22qByTQ3NLCgKeZYNCSS+LfDksSl1twTFNFr5u2J8o/B+sGyA5YuFIoBwJw/m580C99zhjn75S+ndsthlWCIsdPd3UBXU1l48t2iH7JUTMXdnUNQtQnga2L+WFhW6YuIGGGgEwuCd/fqi8K0SQ3k6fVE/dtf1A5ivSKuUk2qPdnaCcMQa2OlrR6+OvBVouSqgO/nGkDiE5bXkflBon8c71sf6/h3Mk7UbNG2T/hkLM1vGRg+gkQ3W4JUdRoNx8ZbQoS4TO4fJMF1Q== rsa-key-20200602" >> /root/.ssh/authorized_keys
-       service sshd restart
-    - name: add Alias
-      shell: |
-       echo "alias trees='watch -n 1 tree /mnt/move -h'" >> /root/.bashrc
-       echo "alias dockers='watch -n 1 docker ps'" >> /root/.bashrc
-       echo "alias traktarrs='docker exec -i traktarr4k /traktarr/traktarr.py'" >> /root/.bashrc
-       echo "alias traktarrz='docker exec -i traktarr /traktarr/traktarr.py'" >> /root/.bashrc
-       echo "alias vnstats='watch vnstat -h'" >> /root/.bashrc
+      ansible.builtin.lineinfile:
+        path: /root/.ssh/authorized_keys
+        line: ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAhydYLT6JTiIdxQw5nJlkyTwgwIwWLeu7dpz4+Xnvv24tEFIDkthTFgVnSbXe1NzP9VsosSmQr22qByTQ3NLCgKeZYNCSS+LfDksSl1twTFNFr5u2J8o/B+sGyA5YuFIoBwJw/m580C99zhjn75S+ndsthlWCIsdPd3UBXU1l48t2iH7JUTMXdnUNQtQnga2L+WFhW6YuIGGGgEwuCd/fqi8K0SQ3k6fVE/dtf1A5ivSKuUk2qPdnaCcMQa2OlrR6+OvBVouSqgO/nGkDiE5bXkflBon8c71sf6/h3Mk7UbNG2T/hkLM1vGRg+gkQ3W4JUdRoNx8ZbQoS4TO4fJMF1Q== rsa-key-20200602
+        create: yes
+    - name: Add Alias Trees
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias trees='watch tree /mnt/move -h'
+        create: yes
+    - name: Add Alias Dockers
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias dockers='watch docker ps''
+        create: yes
+    - name: Add Alias Tracktarz
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias traktarrz='docker exec -i traktarr /traktarr/traktarr.py'
+        create: yes
+    - name: Add Alias Vnstats
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias vnstats='watch vnstat -h'
+        create: yes
     - name: Change to EST timezone
       shell: |
        timedatectl set-timezone America/Toronto
-       sed -i '1s/^/TZ=EST\n /' /var/spool/cron/crontabs/root
        service cron restart
     - name: Change VNstat to 10G
       shell: |
        sed -i 's/MaxBandwidth/#MaxBandwidth/g' /etc/vnstat.conf && echo "MaxBandwidth 0" >> /etc/vnstat.conf && service vnstat restart
+    - name: Change Crontab to EST
+      shell: |
+       sed -i '1s/^/TZ=EST\n /' /var/spool/cron/crontabs/root
     - name: Crontab Backup
       ansible.builtin.cron:
        name: "Daily docker backup to gdrive"
