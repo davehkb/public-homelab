@@ -54,11 +54,6 @@
        minute: "0"
        hour: "2"
        job : "wget -O backup.sh https://raw.githubusercontent.com/davehkb/public-homelab/main/backup.sh &&  chmod 777 /root/backup.sh && /root/backup.sh > /root/backup.log && sudo rm -R /root/backup.sh"
-    - name: Crontab Hourly download cleanup
-      ansible.builtin.cron:
-       name: "Hourly download cleanup"
-       special_time: "hourly"
-       job : "find /mnt/unionfs/Downloads/complete/ -type d -path '/mnt/unionfs/Downloads/complete/*' -mmin +120 -exec rm -rf {} '\';"
     - name: Install pre-PTS
       shell: |
        sudo apt-get update -yqq
