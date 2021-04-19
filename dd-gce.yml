@@ -57,7 +57,7 @@
     - name: Crontab Hourly download cleanup
       ansible.builtin.cron:
        name: "Hourly download cleanup"
-       special.time: "hourly"
+       special_time: "hourly"
        job : "find /mnt/unionfs/Downloads/complete/ -type d -path "/mnt/unionfs/Downloads/complete/*" -mmin +120 -exec rm -rf {} \;"
     - name: Install pre-PTS
       shell: |
