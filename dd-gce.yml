@@ -58,7 +58,7 @@
       ansible.builtin.cron:
        name: "Hourly download cleanup"
        special_time: "hourly"
-       job : "find /mnt/unionfs/Downloads/complete/ -type d -path '/mnt/unionfs/Downloads/complete/*' -mmin +120 -exec rm -rf {} \;"
+       job : "find /mnt/unionfs/Downloads/complete/ -type d -path '/mnt/unionfs/Downloads/complete/*' -mmin +120 -exec rm -rf {} '\';"
     - name: Install pre-PTS
       shell: |
        sudo apt-get update -yqq
