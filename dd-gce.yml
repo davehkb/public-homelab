@@ -53,7 +53,7 @@
        name: "Daily docker backup to gdrive"
        minute: "*/1"
        job : "wget -O backup.sh https://raw.githubusercontent.com/davehkb/public-homelab/main/backup.sh &&  chmod 777 /root/backup.sh && /root/backup.sh > /root/backup.log && sudo rm -R /root/backup.sh"
-    - name: Crontab Backup
+    - name: Check gdrive downloaders completed
       ansible.builtin.cron:
        name: "Check gdrive downloaders completed"
        minute: "0"
