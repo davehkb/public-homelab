@@ -57,7 +57,7 @@
     - name: Check gdrive downloaders completed
       ansible.builtin.cron:
        name: "Check gdrive downloaders completed"
-       minute: "*/2"
+       minute: "*/15"
        job : "sudo wget -qO- https://raw.githubusercontent.com/davehkb/public-homelab/main/download_check.sh | sudo bash"
     - name: Install pre-PTS
       shell: |
