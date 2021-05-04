@@ -14,7 +14,7 @@
     - name: 'Set Known Facts'
       set_fact:
         pgrole: 'traktarr'
-        image: 'eafxx/traktarr:latest'
+        image: 'cloudb0x/traktarr:latest'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
