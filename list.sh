@@ -1,5 +1,5 @@
 #!/bin/bash
 echo hello
-traktarrs="docker exec -i traktarr /traktarr/traktarr.py"
-echo $traktarrs
+TRAK="docker exec -i traktarr /traktarr/traktarr.py"
+echo $TRAK
 #docker exec -i traktarr /traktarr/traktarr.py movies -t trending
