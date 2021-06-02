@@ -4,6 +4,9 @@ TRAK="docker exec -i traktarr /traktarr/traktarr.py"
 LIST="trending anticipated popular played"
 M=50
 S=5
+sleeptime=60s
+
+
 
 for x in $LIST
 do
@@ -13,12 +16,12 @@ do
         then
                 echo $x is trending
                 $TRAK movies -t $x
-                echo sleep for 2s
-                sleep 30s
+                echo sleep for $sleeptime
+                sleep $sleeptime
         else
                 $TRAK movies -t $x -l $M
-                echo sleep for 2S
-                sleep 30s
+                echo sleep for $sleeptime
+                sleep $sleeptime
         fi
 done
 
@@ -29,13 +32,13 @@ do
         echo $x
         if [ $x = anticipated ]
         then
-                echo $x is trending
+                echo $x is anticipated
                 $TRAK shows -t $x
-                echo sleep for 2s
-                sleep 30s
+                echo sleep for $sleeptime
+                sleep $sleeptime
         else
                 $TRAK shows -t $x -l $S
-                echo sleep for 2S
-                sleep 30s
+                echo sleep for $sleeptime
+                sleep $sleeptime
         fi
 done
