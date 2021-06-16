@@ -31,6 +31,11 @@
         path: /root/.bashrc
         line: alias traktarrz='docker exec -i traktarr /traktarr/traktarr.py'
         create: yes
+    - name: Add Alias tk
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias tk='docker exec -i traktarr /traktarr/traktarr.py'
+        create: yes
     - name: Add Alias Vnstats
       ansible.builtin.lineinfile:
         path: /root/.bashrc
