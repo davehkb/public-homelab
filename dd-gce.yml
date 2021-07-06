@@ -59,12 +59,6 @@
        minute: "0"
        hour: "2"
        job : "wget -O backup.sh https://raw.githubusercontent.com/davehkb/public-homelab/main/backup.sh &&  chmod 777 /root/backup.sh && /root/backup.sh > /root/backup.log && sudo rm -R /root/backup.sh"
-    - name: Traktarr list
-      ansible.builtin.cron:
-       name: "Daily docker backup to gdrive"
-       minute: "0"
-       hour: "13"
-       job : "sudo wget -qO- https://raw.githubusercontent.com/davehkb/public-homelab/main/list.sh | sudo bash"
     - name: Check gdrive downloaders completed
       ansible.builtin.cron:
        name: "Check gdrive downloaders completed"
