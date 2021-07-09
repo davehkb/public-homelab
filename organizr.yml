@@ -44,7 +44,7 @@
         volumes: '{{pg_volumes}}'
         env: '{{pg_env}}'
         published_ports:
-          - '6969:80'
+          - '6968:80'
         restart_policy: unless-stopped
         networks:
           - name: plexguide
