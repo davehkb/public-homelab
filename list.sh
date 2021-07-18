@@ -2,8 +2,8 @@
 echo hello
 TRAK="docker exec -i traktarr /traktarr/traktarr.py"
 LIST="trending anticipated popular played"
-M=50
-S=5
+M=500
+S=10
 sleeptime=60s
 
 
