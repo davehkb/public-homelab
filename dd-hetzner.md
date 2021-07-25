@@ -1,0 +1,78 @@
+---
+- hosts: all
+  vars:
+   hostname: dd-hetzner
+  become: true
+  become_user: root
+
+  tasks:
+    - name: Update apt repo and cache on all Debian/Ubuntu boxes
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    - name: change hostname
+      hostname:
+       name='{{hostname}}'
+    - name: Add ssh key to proper location
+      ansible.builtin.lineinfile:
+        path: /root/.ssh/authorized_keys
+        line: ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAhydYLT6JTiIdxQw5nJlkyTwgwIwWLeu7dpz4+Xnvv24tEFIDkthTFgVnSbXe1NzP9VsosSmQr22qByTQ3NLCgKeZYNCSS+LfDksSl1twTFNFr5u2J8o/B+sGyA5YuFIoBwJw/m580C99zhjn75S+ndsthlWCIsdPd3UBXU1l48t2iH7JUTMXdnUNQtQnga2L+WFhW6YuIGGGgEwuCd/fqi8K0SQ3k6fVE/dtf1A5ivSKuUk2qPdnaCcMQa2OlrR6+OvBVouSqgO/nGkDiE5bXkflBon8c71sf6/h3Mk7UbNG2T/hkLM1vGRg+gkQ3W4JUdRoNx8ZbQoS4TO4fJMF1Q== rsa-key-20200602
+        create: yes
+    - name: Add Alias Trees
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias trees='watch tree /mnt/move -h'
+        create: yes
+    - name: Add Alias Dockers
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias dockers='watch docker ps'
+        create: yes
+    - name: Add Alias Tracktarz
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias traktarrz='docker exec -i traktarr /traktarr/traktarr.py'
+        create: yes
+    - name: Add Alias tk
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias tk='docker exec -i traktarr /traktarr/traktarr.py'
+        create: yes
+    - name: Add Alias Vnstats
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: alias vnstats='watch vnstat -h'
+        create: yes
+    - name: Change to EST timezone
+      shell: |
+       timedatectl set-timezone America/Toronto
+       service cron restart
+    - name: Change VNstat to 10G
+      shell: |
+       sed -i 's/MaxBandwidth/#MaxBandwidth/g' /etc/vnstat.conf && echo "MaxBandwidth 0" >> /etc/vnstat.conf && service vnstat restart
+    - name: Change crontab to EST
+      ansible.builtin.lineinfile:
+        path: /var/spool/cron/crontabs/root
+        line: TZ=EST
+        create: yes
+    - name: Crontab Backup
+      ansible.builtin.cron:
+       name: "Daily docker backup to gdrive"
+       minute: "0"
+       hour: "2"
+       job : "wget -O backup.sh https://raw.githubusercontent.com/davehkb/public-homelab/main/backup.sh &&  chmod 777 /root/backup.sh && /root/backup.sh > /root/backup.log && sudo rm -R /root/backup.sh"
+    - name: Check gdrive downloaders completed
+      ansible.builtin.cron:
+       name: "Check gdrive downloaders completed"
+       minute: "*/15"
+       job : "sudo wget -qO- https://raw.githubusercontent.com/davehkb/public-homelab/main/download_check.sh | sudo bash"
+    - name: Install pre-PTS
+      shell: |
+       sudo apt-get update -yqq
+       sudo apt-get upgrade -yqq
+       sudo apt-get autoclean -yqq
+       sudo apt-get install wget -y
+       /etc/init.d/cron reload
+    - name: get public IP
+      ipify_facts:
+      register: public_ip
+    - name: output
+      debug: msg="{{ public_ip }}"
