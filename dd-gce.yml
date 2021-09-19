@@ -59,11 +59,6 @@
        minute: "0"
        hour: "2"
        job : "wget -O backup.sh https://raw.githubusercontent.com/davehkb/public-homelab/main/backup.sh &&  chmod 777 /root/backup.sh && /root/backup.sh > /root/backup.log && sudo rm -R /root/backup.sh"
-    - name: Check gdrive downloaders completed
-      ansible.builtin.cron:
-       name: "Check gdrive downloaders completed"
-       minute: "*/15"
-       job : "sudo wget -qO- https://raw.githubusercontent.com/davehkb/public-homelab/main/download_check.sh | sudo bash"
     - name: Install pre-PTS
       shell: |
        sudo apt-get update -yqq
